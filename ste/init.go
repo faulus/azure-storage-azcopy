@@ -149,7 +149,7 @@ func ExecuteNewCopyJobPartOrder(order common.CopyJobPartOrderRequest) common.Cop
 		 * immediately after it is scheduled, and wind down
 		 * the transfer
 		 */
-		jpm.Log(pipeline.LogError, "No transfers were scheduled.")
+		jpm.Log(pipeline.LogWarning, "No transfers were scheduled.")
 	}
 	// Get credential info from RPC request order, and set in InMemoryTransitJobState.
 	jpm.setInMemoryTransitJobState(

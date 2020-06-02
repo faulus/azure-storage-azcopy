@@ -1110,11 +1110,7 @@ func (cca *cookedCopyCmdArgs) processCopyJobPartOrders() (err error) {
 	}
 
 	if err != nil {
-		if err == NothingToRemoveError || err == NothingScheduledError {
-			return err // don't wrap it with anything that uses the word "error"
-		} else {
-			return fmt.Errorf("cannot start job due to error: %s.\n", err)
-		}
+		return fmt.Errorf("cannot start job due to error: %s.\n", err)
 	}
 
 	return nil

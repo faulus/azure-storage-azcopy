@@ -24,8 +24,9 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"github.com/Azure/azure-pipeline-go/pipeline"
 	"sync/atomic"
+
+	"github.com/Azure/azure-pipeline-go/pipeline"
 
 	"github.com/Azure/azure-storage-azcopy/common"
 	"github.com/Azure/azure-storage-azcopy/ste"
@@ -149,7 +150,7 @@ func (cca *cookedSyncCmdArgs) initEnumerator(ctx context.Context) (enumerator *s
 
 			jobInitiated, err := transferScheduler.dispatchFinalPart()
 			// sync cleanly exits if nothing is scheduled.
-			if err != nil && err != NothingScheduledError {
+			if err != nil {
 				return err
 			}
 
@@ -189,7 +190,7 @@ func (cca *cookedSyncCmdArgs) initEnumerator(ctx context.Context) (enumerator *s
 			// otherwise if the final part is executed too quickly, we might quit before deletions could finish
 			jobInitiated, err := transferScheduler.dispatchFinalPart()
 			// sync cleanly exits if nothing is scheduled.
-			if err != nil && err != NothingScheduledError {
+			if err != nil {
 				return err
 			}
 

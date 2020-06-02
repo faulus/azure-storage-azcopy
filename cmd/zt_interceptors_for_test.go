@@ -42,13 +42,8 @@ func (i *interceptor) intercept(cmd common.RpcCmd, request interface{}, response
 		copyRequest := *request.(*common.CopyJobPartOrderRequest)
 		i.transfers = append(i.transfers, copyRequest.Transfers...)
 		i.lastRequest = request
-
 		// mock the result
-		if len(i.transfers) != 0 || !copyRequest.IsFinalPart {
-			*(response.(*common.CopyJobPartOrderResponse)) = common.CopyJobPartOrderResponse{JobStarted: true}
-		} else {
-			*(response.(*common.CopyJobPartOrderResponse)) = common.CopyJobPartOrderResponse{JobStarted: false, ErrorMsg: common.ECopyJobPartOrderErrorType.NoTransfersScheduledErr()}
-		}
+		*(response.(*common.CopyJobPartOrderResponse)) = common.CopyJobPartOrderResponse{JobStarted: true}
 	case common.ERpcCmd.ListJobs():
 	case common.ERpcCmd.ListJobSummary():
 	case common.ERpcCmd.ListJobTransfers():

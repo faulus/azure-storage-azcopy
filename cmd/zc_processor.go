@@ -22,6 +22,7 @@ package cmd
 
 import (
 	"fmt"
+
 	"github.com/Azure/azure-pipeline-go/pipeline"
 
 	"github.com/pkg/errors"
@@ -99,7 +100,6 @@ func (s *copyTransferProcessor) scheduleCopyTransfer(storedObject storedObject) 
 	return nil
 }
 
-var NothingScheduledError = errors.New("no transfers were scheduled because no files matched the specified criteria")
 var FinalPartCreatedMessage = "Final job part has been created"
 
 func (s *copyTransferProcessor) dispatchFinalPart() (copyJobInitiated bool, err error) {
@@ -108,10 +108,6 @@ func (s *copyTransferProcessor) dispatchFinalPart() (copyJobInitiated bool, err 
 	resp = s.sendPartToSte()
 
 	if !resp.JobStarted {
-		if resp.ErrorMsg == common.ECopyJobPartOrderErrorType.NoTransfersScheduledErr() {
-			return false, NothingScheduledError
-		}
-
 		return false, fmt.Errorf("copy job part order with JobId %s and part number %d failed because %s",
 			s.copyJobTemplate.JobID, s.copyJobTemplate.PartNum, resp.ErrorMsg)
 	}
